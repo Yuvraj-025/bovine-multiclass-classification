@@ -1,4 +1,4 @@
-# Bovine Multiclass Classification System 🐄 :contentReference[oaicite:0]{index=0}
+# Bovine Multiclass Classification System
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
@@ -20,8 +20,8 @@ See [Setup Instructions](SETUP.md) for detailed installation instructions.
 
 ## 📁 Project Structure
 
-'''
-cow_identification_project_AI/
+```
+bovine_identification/
 ├── backend/
 │   ├── api/                 # API endpoints
 │   ├── model_loader/        # Model management
@@ -38,7 +38,7 @@ cow_identification_project_AI/
 ├── start-system.py          # Unified startup script
 ├── SETUP.md                 # Setup instructions
 └── README.md                # Project documentation
-'''
+```
 
 ## ⚙️ Setup Instructions
 ### Prerequisites
@@ -53,25 +53,34 @@ The easiest way to start both the frontend and backend is using the `start-syste
 
 ```bash
 python start-system.py
-'''
+```
 
 Option 2: Manual Start (Advanced)
 If you need to start individual components:
 Backend:
+```
 cd backend && python start_server.py
+```
 Frontend:
+```
 cd frontend && npm install
 npm run dev
+```
 Then visit http://localhost:3000 to use the application.
+
 Manual Installation Steps
-1. Backend Setup
+1. Backend Setup -
+```
 cd backend
 pip install -r requirements.txt
 python start_server.py
-2. Frontend Setup
+```
+3. Frontend Setup
+```
 cd frontend
 npm install
 npm run dev
+```
 
 ▶️ Usage Instructions
 1. Start both backend and frontend servers (see Setup above)
@@ -93,46 +102,6 @@ Models will automatically appear in the model selector when placed in backend/mo
 Screenshots
 Upload UI
 Prediction Result
-
-## 🏗️ Training New Models
-Training CNN Models
-To train the vanilla CNN with more layers:
-```bash
-python src/train_cow_vanilla_lesslayers.py
-To train the vanilla CNN with more layers:
-```bash
-python src/train_cow_vanilla_more.py
-Note: You'll need to obtain the cattle breed dataset separately. See Dataset Information (docs/dataset.md).
-
-Training ResNet50 Model
-To train the model using ResNet50:
-```bash
-python src/train_resnet50_cattle.py
-
-## 🔌 API Endpoints
-GET /models
-Returns a list of available models:
-{
-  "models": [
-    "cattle_breed_classifier.pth",
-    "resnet50_cattle_classifier.pth"
-  ]
-}
-POST /predict
-Accepts an image file and model name, returns prediction:
-{
-  "model_used": "cattle_breed_classifier.pth",
-  "predicted_class": "Gir",
-  "confidence": 0.9234
-}
-POST /reload-models
-Reloads models from disk without restarting the server:
-{
-  "message": "Models reloaded successfully",
-  "models": ["cattle_breed_classifier.pth", "resnet50_cattle_classifier.pth"]
-}
-'''
-
 
 ## ❓ Troubleshooting
 Common Issues:
