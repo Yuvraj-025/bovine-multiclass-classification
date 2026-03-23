@@ -75,23 +75,35 @@ class ModelManager:
                 model_name = os.path.basename(model_path)
                 self.model_paths[model_name] = model_path
                 
+                # Load state dict first to detect number of classes
+                state_dict = torch.load(model_path, map_location=self.device)
+                
+                # Detect number of classes from state_dict
+                model_num_classes = self.num_classes
+                # Check common final layer bias keys
+                for key in ["fc.bias", "classifier.6.bias", "classifier.3.bias"]:
+                    if key in state_dict:
+                        model_num_classes = state_dict[key].shape[0]
+                        break
+                
                 # Load the appropriate architecture
                 model = None
-                if "lesslayers" in model_name.lower() or "cattle_breed_classifier" in model_name.lower() or "cattle_cnn_model" in model_name.lower():
-                    model = VanillaCNNLessLayers(self.num_classes)
-                elif "more" in model_name.lower() or "morelayers" in model_name.lower():
-                    model = VanillaCNNMoreLayers(self.num_classes)
-                elif "resnet50" in model_name.lower():
-                    model = get_resnet50_model(self.num_classes)
+                if "resnet50" in model_name.lower() or "cattle_breed_classifier" in model_name.lower():
+                    model = get_resnet50_model(model_num_classes)
+                elif "more" in model_name.lower() or "morelayers" in model_name.lower() or "cnn_model2" in model_name.lower():
+                    model = VanillaCNNMoreLayers(model_num_classes)
+                elif "lesslayers" in model_name.lower() or "cattle_cnn_model" in model_name.lower():
+                    model = VanillaCNNLessLayers(model_num_classes)
                 
                 if model:
-                    # Load state dict
-                    state_dict = torch.load(model_path, map_location=self.device)
                     model.load_state_dict(state_dict)
                     model.to(self.device)
                     model.eval()
                     self.models[model_name] = model
-                    print(f"Successfully loaded and registered model: {model_name}")
+                    if model_num_classes != self.num_classes:
+                        print(f"Successfully loaded {model_name} ({model_num_classes} classes)")
+                    else:
+                        print(f"Successfully loaded and registered model: {model_name}")
                 else:
                     print(f"Warning: Unknown model architecture for {model_name}. Skipping loading.")
                     

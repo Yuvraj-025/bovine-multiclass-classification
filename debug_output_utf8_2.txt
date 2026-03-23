@@ -1,0 +1,27 @@
+﻿Found 6 models: ['cattle_breed_classifier.pth', 'cattle_cnn_model.pth', 'cattle_cnn_model2.pth', 'cattle_cnn_model_lesslayers.pth', 'cattle_cnn_model_more.pth', 'resnet50_cattle_classifier.pth']
+
+Processing: cattle_breed_classifier.pth
+Selected Architecture: get_resnet50_model
+FAILURE: Could not load cattle_breed_classifier.pth with get_resnet50_model. Error: Error(s) in loading state_dict for ResNet:
+	size mismatch for fc.weight: copying a param with shape torch.Size([25, 2048]) from checkpoint, the shape in current model is torch.Size([49, 2048]).
+	size mismatch for fc.bias: copying a param with shape torch.Size([25]) from checkpoint, the shape in current model is torch.Size([49]).
+
+Processing: cattle_cnn_model.pth
+Selected Architecture: VanillaCNNLessLayers
+SUCCESS: Loaded cattle_cnn_model.pth with VanillaCNNLessLayers
+
+Processing: cattle_cnn_model2.pth
+Selected Architecture: VanillaCNNMoreLayers
+SUCCESS: Loaded cattle_cnn_model2.pth with VanillaCNNMoreLayers
+
+Processing: cattle_cnn_model_lesslayers.pth
+Selected Architecture: VanillaCNNLessLayers
+SUCCESS: Loaded cattle_cnn_model_lesslayers.pth with VanillaCNNLessLayers
+
+Processing: cattle_cnn_model_more.pth
+Selected Architecture: VanillaCNNMoreLayers
+SUCCESS: Loaded cattle_cnn_model_more.pth with VanillaCNNMoreLayers
+
+Processing: resnet50_cattle_classifier.pth
+Selected Architecture: get_resnet50_model
+SUCCESS: Loaded resnet50_cattle_classifier.pth with get_resnet50_model
