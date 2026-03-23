@@ -10,7 +10,7 @@ from model_predictor import predict_model
 
 def main():
     # Test with a specific image and model
-    image_path = "tests/images/image.png"
+    image_path = "image.png"
     model_type = "lesslayers"
     
     if not os.path.exists(image_path):

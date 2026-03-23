@@ -38,10 +38,11 @@ class PredictionService:
         """
         # Get the model
         model = self.model_manager.get_model(model_name)
+        device = self.model_manager.device
         
         # Preprocess image
         input_tensor = self.transform(image)
-        input_batch = input_tensor.unsqueeze(0)  # Add batch dimension
+        input_batch = input_tensor.unsqueeze(0).to(device)  # Add batch dimension and move to device
         
         # Perform inference
         with torch.no_grad():
@@ -54,7 +55,12 @@ class PredictionService:
             confidence, predicted_idx = torch.max(probabilities, 0)
             
             # Convert to Python types
-            predicted_class = self.class_labels[predicted_idx.item()]
+            # Note: Ensure index is within bounds of class_labels
+            if predicted_idx.item() < len(self.class_labels):
+                predicted_class = self.class_labels[predicted_idx.item()]
+            else:
+                predicted_class = f"Unknown (ID: {predicted_idx.item()})"
+                
             confidence_score = confidence.item()
             
         return {

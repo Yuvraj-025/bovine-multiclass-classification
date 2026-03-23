@@ -3,6 +3,7 @@ import os
 import glob
 from typing import Dict, List
 import torch.nn as nn
+from .models import VanillaCNNLessLayers, VanillaCNNMoreLayers, get_resnet50_model
 
 class ModelManager:
     def __init__(self, model_directory: str = "../models"):
@@ -28,14 +29,32 @@ class ModelManager:
             # Absolute path
             self.model_directory = model_directory
             
-        self.models: Dict[str, str] = {}  # Store paths as strings, not model objects
+        self.models: Dict[str, nn.Module] = {}  # Store loaded model objects
+        self.model_paths: Dict[str, str] = {}   # Store paths for reference
         self.supported_formats = ["*.pth", "*.pt", "*.h5", "*.pkl"]
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        
+        # Determine number of classes from data directory
+        self.num_classes = self._get_num_classes()
+        print(f"Detected {self.num_classes} classes for models")
+        
         self.load_models()
-        print(f"Model Manager initialized. Found {len(self.models)} models")
-    
+        print(f"Model Manager initialized. Loaded {len(self.models)} models on {self.device}")
+
+    def _get_num_classes(self) -> int:
+        """Helper to determine number of classes from the dataset"""
+        project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        data_dir = os.path.join(project_root, "data", "cattle")
+        if os.path.exists(data_dir):
+            classes = [d for d in os.listdir(data_dir) if os.path.isdir(os.path.join(data_dir, d))]
+            if classes:
+                return len(classes)
+        return 49  # Default fallback based on current dataset
+
     def load_models(self):
         """Load all models from the models directory"""
         self.models = {}
+        self.model_paths = {}
         
         print(f"Looking for models in: {self.model_directory}")
         
@@ -47,32 +66,46 @@ class ModelManager:
         model_files = []
         for pattern in self.supported_formats:
             pattern_files = glob.glob(os.path.join(self.model_directory, pattern))
-            print(f"Pattern {pattern} matched {len(pattern_files)} files")
             model_files.extend(pattern_files)
         
         print(f"Found {len(model_files)} model files total")
-        if model_files:
-            print(f"First few files: {[os.path.basename(f) for f in model_files[:3]]}")
         
         for model_path in model_files:
             try:
                 model_name = os.path.basename(model_path)
-                # For now, just store the path instead of loading the actual model
-                # Loading PyTorch models can fail with pickled models
-                self.models[model_name] = model_path
-                print(f"Registered model: {model_name}")
+                self.model_paths[model_name] = model_path
+                
+                # Load the appropriate architecture
+                model = None
+                if "lesslayers" in model_name.lower() or "cattle_breed_classifier" in model_name.lower() or "cattle_cnn_model" in model_name.lower():
+                    model = VanillaCNNLessLayers(self.num_classes)
+                elif "more" in model_name.lower() or "morelayers" in model_name.lower():
+                    model = VanillaCNNMoreLayers(self.num_classes)
+                elif "resnet50" in model_name.lower():
+                    model = get_resnet50_model(self.num_classes)
+                
+                if model:
+                    # Load state dict
+                    state_dict = torch.load(model_path, map_location=self.device)
+                    model.load_state_dict(state_dict)
+                    model.to(self.device)
+                    model.eval()
+                    self.models[model_name] = model
+                    print(f"Successfully loaded and registered model: {model_name}")
+                else:
+                    print(f"Warning: Unknown model architecture for {model_name}. Skipping loading.")
+                    
             except Exception as e:
-                print(f"Warning: Could not register model {model_path}: {str(e)}")
+                print(f"Warning: Could not load model {model_path}: {str(e)}")
     
     def list_models(self) -> List[str]:
         """Return list of available model names"""
         return list(self.models.keys())
     
-    def get_model(self, model_name: str):
-        """Get a specific model by name (returns path)"""
+    def get_model(self, model_name: str) -> nn.Module:
+        """Get a specific loaded model by name"""
         if model_name not in self.models:
-            raise FileNotFoundError(f"Model '{model_name}' not found")
-        # Return the path for now, actual loading will happen in prediction service
+            raise FileNotFoundError(f"Model '{model_name}' not found or could not be loaded")
         return self.models[model_name]
     
     def reload_models(self):

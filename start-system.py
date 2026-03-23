@@ -57,10 +57,10 @@ def start_frontend():
         # Check if node_modules exists, if not install dependencies
         if not os.path.exists("node_modules"):
             print("Installing frontend dependencies...")
-            subprocess.run(["npm", "install"], check=True)
+            subprocess.run(["npm", "install"], check=True, shell=True)
         
         # Start the development server
-        process = subprocess.Popen(["npm", "run", "dev"])
+        process = subprocess.Popen(["npm", "run", "dev"], shell=True)
         
         print("✓ Frontend server started successfully")
         print("  Access the application at: http://localhost:3000")
