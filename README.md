@@ -41,7 +41,6 @@ bovine_identification/
 ```
 
 ## 🖼️ Screenshots
-Screenshots
 ![Landing Page](media/landing.png)
 ![Models Available](media/models.png)
 ![Predicted result](media/prediction.png)
