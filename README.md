@@ -1,8 +1,14 @@
 # Cow Identification Project (AI)
 
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+
 This project uses Convolutional Neural Networks (CNNs) to identify different breeds of cattle from images.
 
-## 🌐 Web Application (New!)
+## 🌐 Web Application
 
 We've built a complete web application with React frontend and FastAPI backend that allows you to:
 - Upload images of cows
@@ -47,24 +53,24 @@ pip install torch torchvision matplotlib albumentations opencv-python scikit-lea
 cd frontend && npm install
 ```
 
-### Running the Web Application
+#### Running the Web Application
 
-#### Option 1: Using Batch Files (Windows)
+#### Option 1: Unified Startup (Recommended)
+The easiest way to start both the frontend and backend is using the `start-system.py` script:
 ```bash
-# Start both backend and frontend servers (Windows only)
-start-all.bat
-
-# Or start individual components
-start-backend.bat
-start-frontend.bat
+python start-system.py
 ```
 
-#### Option 2: Manual Start (Cross-platform)
-```bash
-# Start the backend server
-cd backend && python start_server.py
+#### Option 2: Manual Start (Advanced)
+If you need to start individual components:
 
-# In a new terminal, start the frontend development server
+**Backend:**
+```bash
+cd backend && python start_server.py
+```
+
+**Frontend:**
+```bash
 cd frontend && npm run dev
 ```
 
