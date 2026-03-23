@@ -40,6 +40,12 @@ bovine_identification/
 └── README.md                # Project documentation
 ```
 
+## 🖼️ Screenshots
+Screenshots
+![Landing Page](media/landing.png)
+![Models Available](media/models.png)
+![Predicted result](media/prediction.png)
+
 ## ⚙️ Setup Instructions
 ### Prerequisites
 - Python 3.7+
@@ -97,11 +103,6 @@ Currently available models:
 - resnet50_cattle_classifier.pth - Transfer learning model based on ResNet50
 - cattle_breed_classifier.pth - Optimized ResNet50-based classifier
 Models will automatically appear in the model selector when placed in backend/models/.
-
-## 🖼️ Screenshots
-Screenshots
-Upload UI
-Prediction Result
 
 ## ❓ Troubleshooting
 Common Issues:
