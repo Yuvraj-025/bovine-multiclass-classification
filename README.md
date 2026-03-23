@@ -1,4 +1,4 @@
-# Cow Identification Project (AI)
+# Bovine Multiclass Classification
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)
@@ -6,9 +6,15 @@
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 
-This project uses Convolutional Neural Networks (CNNs) to identify different breeds of cattle from images.
+## Project Overview
+
+**Bovine Multiclass Classification** is an AI-powered system designed to identify and classify diverse breeds of Indian cattle. By leveraging modern Deep Learning techniques, specifically Convolutional Neural Networks (CNNs), the project aims to provide an accurate and accessible tool for farmers, veterinarians, and agricultural researchers to recognize cattle breeds instantly from a single photograph.
+
+The system is capable of distinguishing between **49 different breeds**, including prominent varieties like Amritmahal, Gir, Sahiwal, and many more. It provides a real-time prediction interface with confidence scores across multiple trained architectures, ranging from custom "Vanilla" CNNs to advanced Transfer Learning models like ResNet50.
 
 ## 🌐 Web Application
+
+Our full-stack solution offers a seamless experience through an interactive web portal:
 
 We've built a complete web application with React frontend and FastAPI backend that allows you to:
 - Upload images of cows
@@ -88,8 +94,7 @@ python src/augumentation_model.py
 ```
 
 ## Dataset
-The dataset consists of various Indian cattle breeds such as Amritmahal, Gir, Sahiwal, etc.
+The dataset for this project has been sourced from **Kaggle**. It consists of various Indian cattle breeds such as Amritmahal, Gir, Sahiwal, etc.
 The training scripts expect the dataset in `data/cattle/`.
 
-## Note on Destructured Images
-The folder `data/cattle_images_destructured/` contains images renamed in the format `[breedname]_img_[index].ext`. These were processed from the original `cattle_images` folder to provide a flat, searchable naming convention.
+
