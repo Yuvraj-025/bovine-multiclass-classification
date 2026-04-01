@@ -10,6 +10,8 @@
 **Bovine Multiclass Classification** is an AI-powered system designed to identify and classify diverse breeds of Indian cattle. By leveraging modern Deep Learning techniques, specifically Convolutional Neural Networks (CNNs), the project aims to provide an accurate and accessible tool for farmers, veterinarians, and agricultural researchers to recognize cattle breeds instantly from a single photograph.
 The system is capable of distinguishing between **49 different breeds**, including prominent varieties like Amritmahal, Gir, Sahiwal, and many more. It provides a real-time prediction interface with confidence scores across multiple trained architectures, ranging from custom "Vanilla" CNNs to advanced Transfer Learning models like ResNet50.
 
+<p>My Role: Helped connect the backend with the frontend and handled image upload and prediction display.</p>
+
 ## 🌐 Web Application
 Our full-stack solution offers a seamless experience through an interactive web portal:
 We've built a complete web application with React frontend and FastAPI backend that allows you to:
